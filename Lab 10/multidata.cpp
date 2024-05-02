@@ -10,7 +10,8 @@ using namespace std;
 /// @param v : vector of elements
 /// @param elem : integer to look for
 /// @return int
-int iterativeSearch(const vector<int>&v, int elem){
+template<typename T>
+int iterativeSearch(vector<T>v, T elem){
     //use a for loop where the index, i goes from 0 to the size of v
     for(int i=0;i<v.size();i++){
     //inside the for loop, use an if statement to check whether the element at 1 (e.g. v[i]) equals elem
@@ -37,8 +38,8 @@ int iterativeSearch(const vector<int>&v, int elem){
 /// @param end : rightmost index (starting value is v.size())
 /// @param elem : integer to look for
 /// @return int
-
-int binarySearch(vector<int> & v, int start, int end, int elem){
+template <typename T>
+int binarySearch(vector<T> & v, T start, T end, T elem){
     //write an if statement that checks the terminating case
     //inside the if statement return -1
     if(start>end){
@@ -63,11 +64,11 @@ int binarySearch(vector<int> & v, int start, int end, int elem){
     //return a recursive call to binarySearch
     return binarySearch(v, start, end, elem);
 }
-
-void vecGen( const string &filename, vector<int> &v){
+template<typename T>
+void vecGen(string filename, vector<T> &v){
     ifstream file(filename);
     v.clear();
-    int num;
+    T num;
     while (file.is_open() && file >> num){
         v.push_back(num);
     } 
@@ -101,23 +102,11 @@ int main(){
 
     }
 
-    //repeat the for loop above sp that it records the time
-    //it takes for binarySearch to do the same operation
-    for(int i=0; i<elem_to_find.size(); i++){
-        int elem = elem_to_find[i];
 
-        //stopwatches the time
-        auto start = chrono::high_resolution_clock::now();
-        int index_if_found = binarySearch(v, 0, v.size()-1, elem);
-        auto end = chrono::high_resolution_clock::now();
-        
-        //calculates the total time itt took in seconds
-         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        
-        //PRINTS THE INDEX AND HOW LONG IT TOOK TO FIND IT
-        cout << index_if_found<< ": " << duration.count()<< " microseconds" << endl;
+    vector<double> d;
+    vecGen("1000_double.csv", d);
+    vector<double> double_to_find;
+    vecGen("double_to_find.csv", double_to_find);
 
-    }
     
-    return 0;
 }
